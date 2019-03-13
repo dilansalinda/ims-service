@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+
     @GetMapping(value = "/")
-    public String getUsers(){
+    public String getUsers() {
         LOGGER.info("test ok");
         return "test";
     }
