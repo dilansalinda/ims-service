@@ -1,4 +1,4 @@
-package com.dilan.ims.ins.service;
+package com.dilan.ims.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

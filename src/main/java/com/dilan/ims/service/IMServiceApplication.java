@@ -1,13 +1,13 @@
-package com.dilan.ims.ins.service;
+package com.dilan.ims.service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class InsServiceApplication {
+public class IMServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(InsServiceApplication.class, args);
+        SpringApplication.run(IMServiceApplication.class, args);
     }
 
 }
