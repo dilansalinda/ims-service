@@ -1,2 +1,2 @@
 # ims-service
-inventory management system API Service
+investment management system API Service
