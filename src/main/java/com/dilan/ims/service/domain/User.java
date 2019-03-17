@@ -1,7 +1,5 @@
 package com.dilan.ims.service.domain;
 
-import org.springframework.data.jpa.repository.Query;
-
 import javax.persistence.*;
 
 /**
@@ -11,8 +9,8 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name = "c_iuser")
-public class cUser {
+@Table(name = "user")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -22,8 +20,6 @@ public class cUser {
     private String updatedat;
     private String email;
     private String isActive;
-    private String ad1;
-    private String ad2;
 
     public Integer getId() {
         return id;
@@ -79,22 +75,6 @@ public class cUser {
 
     public void setIsActive(String isActive) {
         this.isActive = isActive;
-    }
-
-    public String getAd1() {
-        return ad1;
-    }
-
-    public void setAd1(String ad1) {
-        this.ad1 = ad1;
-    }
-
-    public String getAd2() {
-        return ad2;
-    }
-
-    public void setAd2(String ad2) {
-        this.ad2 = ad2;
     }
 }
 

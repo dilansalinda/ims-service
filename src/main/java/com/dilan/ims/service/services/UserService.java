@@ -1,7 +1,6 @@
 package com.dilan.ims.service.services;
 
-import com.dilan.ims.service.domain.cUser;
-import org.springframework.data.jpa.repository.Query;
+import com.dilan.ims.service.domain.User;
 
 import java.util.List;
 
@@ -12,9 +11,9 @@ import java.util.List;
  */
 public interface UserService {
 
-    List<cUser> getAll();
+    List<User> getAll();
 
-    cUser isUserExist(String user);
+    User isUserExist(String user);
 
-    cUser saveUser(cUser user);
+    User saveUser(User user);
 }

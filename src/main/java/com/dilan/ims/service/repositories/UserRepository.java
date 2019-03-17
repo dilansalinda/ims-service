@@ -1,6 +1,6 @@
 package com.dilan.ims.service.repositories;
 
-import com.dilan.ims.service.domain.cUser;
+import com.dilan.ims.service.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
  * Time: 10:58 AM
  */
 @Repository
-public interface UserRepository extends JpaRepository<cUser, Integer> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
-    @Query("select u from cUser u where u.name = ?1")
-    cUser findByName(String Name);
+    @Query("select u from User u where u.name = ?1")
+    User findByName(String Name);
 }

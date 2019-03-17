@@ -1,6 +1,6 @@
 package com.dilan.ims.service.services;
 
-import com.dilan.ims.service.domain.cUser;
+import com.dilan.ims.service.domain.User;
 import com.dilan.ims.service.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,19 +24,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<cUser> getAll() {
-        List<cUser> users = new ArrayList<>();
+    public List<User> getAll() {
+        List<User> users = new ArrayList<>();
         userRepository.findAll().forEach(users::add);
         return users;
     }
 
     @Override
-    public cUser isUserExist(String user) {
+    public User isUserExist(String user) {
         return userRepository.findByName(user);
     }
 
     @Override
-    public cUser saveUser(cUser user) {
+    public User saveUser(User user) {
         return userRepository.save(user);
     }
 
