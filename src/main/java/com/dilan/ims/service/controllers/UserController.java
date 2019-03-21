@@ -1,6 +1,8 @@
 package com.dilan.ims.service.controllers;
 
 import com.dilan.ims.service.domain.User;
+import com.dilan.ims.service.domain.UserPermission;
+import com.dilan.ims.service.services.UserPermissionService;
 import com.dilan.ims.service.services.UserService;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -24,10 +26,12 @@ public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
     private UserService userService;
+    private UserPermissionService userPermissionService;
 
     @Autowired
-    public void setUserService(UserService userServicea) {
-        this.userService = userServicea;
+    public void setUserService(UserService userService, UserPermissionService userPermissionService) {
+        this.userService = userService;
+        this.userPermissionService = userPermissionService;
     }
 
 
@@ -38,7 +42,7 @@ public class UserController {
         if (users.isEmpty()) {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
     @PostMapping(value = "/add",produces = "application/json")
     public ResponseEntity<User> insertUser(@RequestBody String userJSONString){
@@ -58,6 +62,12 @@ public class UserController {
         }
 
         return new ResponseEntity<User>( userService.saveUser(c), HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/alluser")
+    public ResponseEntity<List<UserPermission>> getAllUserPermission(){
+        List<UserPermission> userPermissions = userPermissionService.getAll();
+        return new ResponseEntity<>(userPermissions,HttpStatus.OK);
     }
 
 }
