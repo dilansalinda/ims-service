@@ -16,4 +16,6 @@ public interface UserService {
     User isUserExist(String user);
 
     User saveUser(User user);
+
+    User userLogin(String userName, String password);
 }

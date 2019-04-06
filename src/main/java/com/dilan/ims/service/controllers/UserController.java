@@ -14,14 +14,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
@@ -34,16 +33,21 @@ public class UserController {
         this.userPermissionService = userPermissionService;
     }
 
+    @CrossOrigin
+    @PostMapping(value = "/login")
+    public ResponseEntity<User> getUsers(@RequestBody String cerdintals ) {
+        Gson gson = new Gson();
+        JsonElement jelement = new JsonParser().parse(cerdintals);
+        JsonObject user = jelement.getAsJsonObject();
+        LOGGER.info("try to login - {}",user.get("username") + " - at - "+ new Date().getTime());
 
-    @GetMapping(value = "/")
-    public ResponseEntity<List<User>> getUsers() {
-        LOGGER.info("test ok");
-        List<User> users = userService.getAll();
-        if (users.isEmpty()) {
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        User users = userService.userLogin(user.get("username").getAsString(), user.get("password").getAsString());
+        if (users.getName() == null) {
+            return new ResponseEntity("password incorrect",HttpStatus.UNAUTHORIZED);
         }
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+    @CrossOrigin
     @PostMapping(value = "/add",produces = "application/json")
     public ResponseEntity<User> insertUser(@RequestBody String userJSONString){
         Gson gson = new Gson();
