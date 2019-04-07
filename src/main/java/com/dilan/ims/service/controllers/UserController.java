@@ -16,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -34,20 +33,25 @@ public class UserController {
     }
 
     @CrossOrigin
-    @PostMapping(value = "/login")
-    public ResponseEntity<User> getUsers(@RequestBody String cerdintals ) {
+    @PostMapping(value = "/login", produces = "application/json")
+    public ResponseEntity<User> getUsers(@RequestBody String credintials) {
+        LOGGER.debug(credintials);
         Gson gson = new Gson();
-        JsonElement jelement = new JsonParser().parse(cerdintals);
-        JsonObject user = jelement.getAsJsonObject();
-        LOGGER.info("try to login - {}",user.get("username") + " - at - "+ new Date().getTime());
+        //User user = gson.fromJson(credintials, User.class);
+       JsonElement jelement = new JsonParser().parse(credintials);
+       JsonObject user = jelement.getAsJsonObject();
+       JsonObject d = user.get("user").getAsJsonObject();
+      //  LOGGER.info("try to login - {}",user.get("username") + " - at - "+ new Date().getTime());
+        //LOGGER.info(user.getName());
+        LOGGER.debug(d.get("username").getAsString());
+        User users = userService.userLogin(d.get("username").getAsString(), d.get("password").getAsString());
 
-        User users = userService.userLogin(user.get("username").getAsString(), user.get("password").getAsString());
         if (users.getName() == null) {
             return new ResponseEntity("password incorrect",HttpStatus.UNAUTHORIZED);
         }
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
-    @CrossOrigin
+
     @PostMapping(value = "/add",produces = "application/json")
     public ResponseEntity<User> insertUser(@RequestBody String userJSONString){
         Gson gson = new Gson();
