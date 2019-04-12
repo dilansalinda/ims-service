@@ -47,7 +47,7 @@ public class UserController {
         User users = userService.userLogin(d.get("username").getAsString(), d.get("password").getAsString());
 
         if (users.getName() == null) {
-            return new ResponseEntity("password incorrect",HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity("password incorrect",HttpStatus.OK);
         }
         return new ResponseEntity<>(users, HttpStatus.OK);
     }

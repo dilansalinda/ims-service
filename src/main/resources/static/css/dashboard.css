@@ -1,0 +1,6 @@
+.clickble-card {
+  text-decoration: none !important;
+}
+.clickble-card:hover {
+  background-color:rgb(245, 245, 245);
+}
