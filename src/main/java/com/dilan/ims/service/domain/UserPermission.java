@@ -23,4 +23,7 @@ public class UserPermission {
     private Integer userId;
     @Column(name = "permission_type_id")
     private Integer permissionTypeId;
+
+    @ManyToOne
+    private PermissionType permissionType;
 }

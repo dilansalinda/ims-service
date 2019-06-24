@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * User: Dilan Salinda
@@ -22,4 +23,7 @@ public class PermissionType {
     private String type;
     @Column(name = "is_active")
     private String isActive;
+
+    @OneToMany( targetEntity=UserPermission.class )
+    private List userPermission;
 }
