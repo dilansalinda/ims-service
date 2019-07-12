@@ -5,18 +5,16 @@ package com.dilan.ims.service.controllers;
  * Date: 4/8/2019
  * Time: 7:06 AM
  */
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
+//@Controller
 public class HomeController {
-    @RequestMapping("/")
-    public String login() {
-        return "index";
-    }
-
-    @RequestMapping("dashboard")
-    public String dashboard() {
-        return "/dashboard";
-    }
+//    @RequestMapping("/")
+//    public String login() {
+//        return "index";
+//    }
+//
+//    @RequestMapping("dashboard")
+//    public String dashboard() {
+//        return "/dashboard";
+//    }
 }

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//import com.dilan.ims.service.services.UserPermissionService;
+
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -32,50 +34,74 @@ public class UserController {
         this.userPermissionService = userPermissionService;
     }
 
+    @GetMapping(value = "/checkConnection")
+    public ResponseEntity<String> checkConnection() {
+        return new ResponseEntity<String>("d", HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/checkConnection/{key}", method = RequestMethod.GET)
+    public ResponseEntity<?> checkConnection(@PathVariable("key") String key) {
+        LOGGER.info("Fetching User with id {}", key);
+
+        if (key == null) {
+            LOGGER.error("User with id {} not found.");
+            return new ResponseEntity("false", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity("true", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/test")
+    public String d() {
+        return "test";
+    }
+
+
     @CrossOrigin
     @PostMapping(value = "/login", produces = "application/json")
     public ResponseEntity<User> getUsers(@RequestBody String credintials) {
         LOGGER.debug(credintials);
         Gson gson = new Gson();
-        //User user = gson.fromJson(credintials, User.class);
-       JsonElement jelement = new JsonParser().parse(credintials);
-       JsonObject user = jelement.getAsJsonObject();
+      //  User user = gson.fromJson(credintials, User.class);
+        JsonElement jelement = new JsonParser().parse(credintials);
+        JsonObject user = jelement.getAsJsonObject();
        JsonObject d = user.get("user").getAsJsonObject();
-      //  LOGGER.info("try to login - {}",user.get("username") + " - at - "+ new Date().getTime());
+        //LOGGER.info("try to login - {}", user.get("username") + " - at - " + new Date().getTime());
         //LOGGER.info(user.getName());
-        LOGGER.debug(d.get("username").getAsString());
+       LOGGER.debug(d.get("username").getAsString());
         User users = userService.userLogin(d.get("username").getAsString(), d.get("password").getAsString());
 
         if (users.getName() == null) {
-            return new ResponseEntity("password incorrect",HttpStatus.OK);
+            return new ResponseEntity("password incorrect", HttpStatus.OK);
         }
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/add",produces = "application/json")
-    public ResponseEntity<User> insertUser(@RequestBody String userJSONString){
+    @PostMapping(value = "/add", produces = "application/json")
+    public ResponseEntity<User> insertUser(@RequestBody String userJSONString) {
         Gson gson = new Gson();
         LOGGER.warn("Receive User : {}", userJSONString);
         JsonElement jelement = new JsonParser().parse(userJSONString);
         JsonObject user = jelement.getAsJsonObject();
 
 
-        User c = gson.fromJson(userJSONString, new TypeToken<User>(){}.getType());
-       // list.forEach(x -> System.out.println(x));
+        User c = gson.fromJson(userJSONString, new TypeToken<User>() {
+        }.getType());
+        // list.forEach(x -> System.out.println(x));
 
         User d = userService.isUserExist(user.get("name").getAsString());
         if (d != null) {
             LOGGER.warn("Unable to create. A User with name {} already exist", user.get("name").getAsString());
-            return new ResponseEntity("try",HttpStatus.CONFLICT);
+            return new ResponseEntity("try", HttpStatus.CONFLICT);
         }
 
-        return new ResponseEntity<User>( userService.saveUser(c), HttpStatus.CREATED);
+        return new ResponseEntity<User>(userService.saveUser(c), HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/alluser")
-    public ResponseEntity<List<UserPermission>> getAllUserPermission(){
+    public ResponseEntity<List<UserPermission>> getAllUserPermission() {
         List<UserPermission> userPermissions = userPermissionService.getAll();
-        return new ResponseEntity<>(userPermissions,HttpStatus.OK);
+        return new ResponseEntity<>(userPermissions, HttpStatus.OK);
     }
 
 }

@@ -14,14 +14,13 @@ import java.io.Serializable;
  * @author Malinda
  */
 @Entity
-@Table(name = "user_permission", catalog = "ims", schema = "")
+@Table(name = "account", catalog = "ims", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "UserPermission.findAll", query = "SELECT u FROM UserPermission u")
-    , @NamedQuery(name = "UserPermission.findById", query = "SELECT u FROM UserPermission u WHERE u.id = :id")
-    , @NamedQuery(name = "UserPermission.findByPermissionTypeId", query = "SELECT u FROM UserPermission u WHERE u.permissionTypeId = :permissionTypeId")
-    , @NamedQuery(name = "UserPermission.findByUserId", query = "SELECT u FROM UserPermission u WHERE u.userId = :userId")})
-public class UserPermission implements Serializable {
+    @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a")
+    , @NamedQuery(name = "Account.findById", query = "SELECT a FROM Account a WHERE a.id = :id")
+    , @NamedQuery(name = "Account.findByIsActive", query = "SELECT a FROM Account a WHERE a.isActive = :isActive")})
+public class Account implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -29,16 +28,23 @@ public class UserPermission implements Serializable {
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Column(name = "permission_type_id")
-    private Integer permissionTypeId;
-    @Column(name = "user_id")
-    private Integer userId;
+    @Basic(optional = false)
+    @Column(name = "is_active", nullable = false)
+    private int isActive;
+    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false)
+    private Customer customerId;
 
-    public UserPermission() {
+    public Account() {
     }
 
-    public UserPermission(Integer id) {
+    public Account(Integer id) {
         this.id = id;
+    }
+
+    public Account(Integer id, int isActive) {
+        this.id = id;
+        this.isActive = isActive;
     }
 
     public Integer getId() {
@@ -49,20 +55,20 @@ public class UserPermission implements Serializable {
         this.id = id;
     }
 
-    public Integer getPermissionTypeId() {
-        return permissionTypeId;
+    public int getIsActive() {
+        return isActive;
     }
 
-    public void setPermissionTypeId(Integer permissionTypeId) {
-        this.permissionTypeId = permissionTypeId;
+    public void setIsActive(int isActive) {
+        this.isActive = isActive;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Customer getCustomerId() {
+        return customerId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setCustomerId(Customer customerId) {
+        this.customerId = customerId;
     }
 
     @Override
@@ -75,10 +81,10 @@ public class UserPermission implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof UserPermission)) {
+        if (!(object instanceof Account)) {
             return false;
         }
-        UserPermission other = (UserPermission) object;
+        Account other = (Account) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -87,7 +93,7 @@ public class UserPermission implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication1.UserPermission[ id=" + id + " ]";
+        return "javaapplication1.Account[ id=" + id + " ]";
     }
     
 }
