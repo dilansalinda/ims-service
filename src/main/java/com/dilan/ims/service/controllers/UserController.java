@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//import com.dilan.ims.service.services.UserPermissionService;
-
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -34,20 +32,9 @@ public class UserController {
         this.userPermissionService = userPermissionService;
     }
 
-    @GetMapping(value = "/checkConnection")
-    public ResponseEntity<String> checkConnection() {
-        return new ResponseEntity<String>("d", HttpStatus.OK);
-    }
+    @RequestMapping(value = "/checkConnection", method = RequestMethod.GET)
+    public ResponseEntity<?> checkConnection() {
 
-
-    @RequestMapping(value = "/checkConnection/{key}", method = RequestMethod.GET)
-    public ResponseEntity<?> checkConnection(@PathVariable("key") String key) {
-        LOGGER.info("Fetching User with id {}", key);
-
-        if (key == null) {
-            LOGGER.error("User with id {} not found.");
-            return new ResponseEntity("false", HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity("true", HttpStatus.OK);
     }
 
@@ -59,20 +46,17 @@ public class UserController {
 
     @CrossOrigin
     @PostMapping(value = "/login", produces = "application/json")
-    public ResponseEntity<User> getUsers(@RequestBody String credintials) {
-        LOGGER.debug(credintials);
-        Gson gson = new Gson();
-      //  User user = gson.fromJson(credintials, User.class);
-        JsonElement jelement = new JsonParser().parse(credintials);
-        JsonObject user = jelement.getAsJsonObject();
-       JsonObject d = user.get("user").getAsJsonObject();
-        //LOGGER.info("try to login - {}", user.get("username") + " - at - " + new Date().getTime());
-        //LOGGER.info(user.getName());
-       LOGGER.info(d.get("username").getAsString());
-        User users = userService.userLogin(d.get("username").getAsString(), d.get("password").getAsString());
+    public ResponseEntity<User> getUsers(@RequestBody String credentials) {
+
+        JsonObject user = new JsonParser().parse(credentials).getAsJsonObject();
+        JsonObject userObject = user.get("user").getAsJsonObject();
+
+        LOGGER.debug(userObject.get("username").getAsString());
+
+        User users = userService.userLogin(userObject.get("username").getAsString(), userObject.get("password").getAsString());
 
         if (users.getUsername() == null) {
-            return new ResponseEntity("password incorrect", HttpStatus.OK);
+            return new ResponseEntity(new JsonObject(), HttpStatus.OK);
         }
         return new ResponseEntity<>(users, HttpStatus.OK);
     }

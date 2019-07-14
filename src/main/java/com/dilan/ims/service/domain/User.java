@@ -183,7 +183,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "javaapplication1.User[ id=" + id + " ]";
+        return "User[ id=" + id + " ]";
     }
     
 }
