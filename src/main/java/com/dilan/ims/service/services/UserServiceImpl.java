@@ -2,6 +2,7 @@ package com.dilan.ims.service.services;
 
 import com.dilan.ims.service.domain.User;
 import com.dilan.ims.service.repositories.UserRepository;
+import com.dilan.ims.service.utils.encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
