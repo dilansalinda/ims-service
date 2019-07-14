@@ -68,10 +68,10 @@ public class UserController {
        JsonObject d = user.get("user").getAsJsonObject();
         //LOGGER.info("try to login - {}", user.get("username") + " - at - " + new Date().getTime());
         //LOGGER.info(user.getName());
-       LOGGER.debug(d.get("username").getAsString());
+       LOGGER.info(d.get("username").getAsString());
         User users = userService.userLogin(d.get("username").getAsString(), d.get("password").getAsString());
 
-        if (users.getName() == null) {
+        if (users.getUsername() == null) {
             return new ResponseEntity("password incorrect", HttpStatus.OK);
         }
         return new ResponseEntity<>(users, HttpStatus.OK);
