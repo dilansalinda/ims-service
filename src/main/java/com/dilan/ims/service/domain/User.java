@@ -5,6 +5,8 @@
  */
 package com.dilan.ims.service.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -46,7 +48,8 @@ public class User {
     private String name;
     @Column(name = "updated_at", length = 255)
     private String updatedAt;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Permission> permissionList;
 
     public User() {
