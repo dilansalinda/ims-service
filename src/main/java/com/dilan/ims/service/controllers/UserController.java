@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -34,8 +35,9 @@ public class UserController {
 
     @RequestMapping(value = "/checkConnection", method = RequestMethod.GET)
     public ResponseEntity<?> checkConnection() {
-
-        return new ResponseEntity("true", HttpStatus.OK);
+        HashMap<String,Boolean> stringBooleanHashMap = new HashMap<>();
+        stringBooleanHashMap.put("boolean",true);
+        return new ResponseEntity(stringBooleanHashMap, HttpStatus.OK);
     }
 
     @GetMapping(value = "/test")
