@@ -5,19 +5,15 @@
  */
 package com.dilan.ims.service.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import java.util.List;
 
 /**
  *
  * @author Malinda
  */
 @Entity
-@Table(name = "user")
+@Table(name = "user", schema = "ims")
 @XmlRootElement
 public class User {
 
@@ -48,9 +44,9 @@ public class User {
     private String name;
     @Column(name = "updated_at", length = 255)
     private String updatedAt;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Permission> permissionList;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId", fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private List<Permission> permissionList;
 
     public User() {
     }
@@ -152,14 +148,14 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-    @XmlTransient
-    public List<Permission> getPermissionList() {
-        return permissionList;
-    }
-
-    public void setPermissionList(List<Permission> permissionList) {
-        this.permissionList = permissionList;
-    }
+//    @XmlTransient
+//    public List<Permission> getPermissionList() {
+//        return permissionList;
+//    }
+//
+//    public void setPermissionList(List<Permission> permissionList) {
+//        this.permissionList = permissionList;
+//    }
 
     @Override
     public int hashCode() {
@@ -185,5 +181,5 @@ public class User {
     public String toString() {
         return "User[ id=" + id + " ]";
     }
-    
+
 }

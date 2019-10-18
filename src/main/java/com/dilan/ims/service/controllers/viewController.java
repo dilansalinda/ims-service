@@ -2,8 +2,7 @@ package com.dilan.ims.service.controllers;
 
 import com.dilan.ims.service.domain.User;
 import com.dilan.ims.service.domain.UserPermission;
-import com.dilan.ims.service.services.UserPermissionService;
-import com.dilan.ims.service.services.UserService;
+import com.dilan.ims.service.services.IUserService;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -21,17 +20,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class UserController {
+@CrossOrigin()
+public class viewController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
-    private UserService userService;
-    private UserPermissionService userPermissionService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(viewController.class);
 
     @Autowired
-    public void setUserService(UserService userService, UserPermissionService userPermissionService) {
-        this.userService = userService;
-        this.userPermissionService = userPermissionService;
-    }
+    IUserService userService;
 
     @RequestMapping(value = "/checkConnection", method = RequestMethod.GET)
     public ResponseEntity<?> checkConnection() {
@@ -45,8 +40,6 @@ public class UserController {
         return "test";
     }
 
-
-    @CrossOrigin
     @PostMapping(value = "/login", produces = "application/json")
     public ResponseEntity<User> getUsers(@RequestBody String credentials) {
 
@@ -67,9 +60,8 @@ public class UserController {
     public ResponseEntity<User> insertUser(@RequestBody String userJSONString) {
         Gson gson = new Gson();
         LOGGER.warn("Receive User : {}", userJSONString);
-        JsonElement jelement = new JsonParser().parse(userJSONString);
-        JsonObject user = jelement.getAsJsonObject();
-
+        JsonElement jElement = new JsonParser().parse(userJSONString);
+        JsonObject user = jElement.getAsJsonObject();
 
         User c = gson.fromJson(userJSONString, new TypeToken<User>() {
         }.getType());
@@ -86,8 +78,8 @@ public class UserController {
 
     @GetMapping(value = "/alluser")
     public ResponseEntity<List<UserPermission>> getAllUserPermission() {
-        List<UserPermission> userPermissions = userPermissionService.getAll();
-        return new ResponseEntity<>(userPermissions, HttpStatus.OK);
+        //List<UserPermission> userPermissions = userService.getAll();
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
 }

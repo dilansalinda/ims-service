@@ -1,4 +1,4 @@
-package com.dilan.ims.service.config;
+package com.dilan.ims.service.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -35,9 +35,9 @@ public class Permission implements Serializable {
     @Basic(optional = false)
     @Column(name = "is_active", nullable = false)
     private int isActive;
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    @ManyToOne(optional = false)
-    private User userId;
+//    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+//    @ManyToOne(optional = false)
+//    private User userId;
 
     public Permission() {
     }
@@ -76,13 +76,6 @@ public class Permission implements Serializable {
         this.isActive = isActive;
     }
 
-    public User getUserId() {
-        return userId;
-    }
-
-    public void setUserId(User userId) {
-        this.userId = userId;
-    }
 
     @Override
     public int hashCode() {

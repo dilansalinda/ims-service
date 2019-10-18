@@ -1,8 +1,9 @@
-package com.dilan.ims.service.services;
+package com.dilan.ims.service.services.Impl;
 
 import com.dilan.ims.service.domain.User;
+import com.dilan.ims.service.repositories.UserPermissionRepository;
 import com.dilan.ims.service.repositories.UserRepository;
-import com.dilan.ims.service.utils.encoder;
+import com.dilan.ims.service.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,19 +16,23 @@ import java.util.List;
  * Time: 11:01 AM
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserService implements IUserService {
 
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;;
-    }
+    private UserPermissionRepository userPermissionRepository;
+
 
     @Override
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
         userRepository.findAll().forEach(users::add);
+
+//        List<UserPermission> userPermissions = new ArrayList<>();
+//        userPermissionRepository.findAll().forEach(userPermissions::add);
+//        return userPermissions;
         return users;
     }
 
@@ -44,7 +49,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User userLogin(String username, String password) {
         try{
-            User user = userRepository.findByUsernameAndPassword(username, encoder.encodeString(password));
+            User user = userRepository.findByUsernameAndPassword(username, password);
             if(user != null){
                 return  user;
             }
