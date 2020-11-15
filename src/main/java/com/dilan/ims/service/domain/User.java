@@ -44,9 +44,6 @@ public class User {
     private String name;
     @Column(name = "updated_at", length = 255)
     private String updatedAt;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId", fetch = FetchType.LAZY)
-//    @JsonIgnore
-//    private List<Permission> permissionList;
 
     public User() {
     }
@@ -148,14 +145,6 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-//    @XmlTransient
-//    public List<Permission> getPermissionList() {
-//        return permissionList;
-//    }
-//
-//    public void setPermissionList(List<Permission> permissionList) {
-//        this.permissionList = permissionList;
-//    }
 
     @Override
     public int hashCode() {
@@ -166,15 +155,11 @@ public class User {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof User)) {
             return false;
         }
         User other = (User) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override

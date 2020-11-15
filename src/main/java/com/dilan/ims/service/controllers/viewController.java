@@ -29,9 +29,9 @@ public class viewController {
     IUserService userService;
 
     @RequestMapping(value = "/checkConnection", method = RequestMethod.GET)
-    public ResponseEntity<?> checkConnection() {
-        HashMap<String,Boolean> stringBooleanHashMap = new HashMap<>();
-        stringBooleanHashMap.put("boolean",true);
+    public ResponseEntity<HashMap<String, Boolean>> stringBooleanHashMapcheckConnection() {
+        HashMap<String, Boolean> stringBooleanHashMap = new HashMap<>();
+        stringBooleanHashMap.put("boolean", true);
         return new ResponseEntity(stringBooleanHashMap, HttpStatus.OK);
     }
 
@@ -41,7 +41,7 @@ public class viewController {
     }
 
     @PostMapping(value = "/login", produces = "application/json")
-    public ResponseEntity<User> getUsers(@RequestBody String credentials) {
+    public ResponseEntity getUsers(@RequestBody String credentials) {
 
         JsonObject user = new JsonParser().parse(credentials).getAsJsonObject();
         JsonObject userObject = user.get("user").getAsJsonObject();
@@ -65,7 +65,6 @@ public class viewController {
 
         User c = gson.fromJson(userJSONString, new TypeToken<User>() {
         }.getType());
-        // list.forEach(x -> System.out.println(x));
 
         User d = userService.isUserExist(user.get("name").getAsString());
         if (d != null) {
@@ -78,7 +77,6 @@ public class viewController {
 
     @GetMapping(value = "/alluser")
     public ResponseEntity<List<UserPermission>> getAllUserPermission() {
-        //List<UserPermission> userPermissions = userService.getAll();
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 

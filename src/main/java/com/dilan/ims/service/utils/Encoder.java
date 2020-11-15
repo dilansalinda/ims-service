@@ -6,7 +6,7 @@ import org.apache.commons.codec.binary.Base64;
  * Date: 3/13/2019
  * Time: 11:38 AM
  */
-public class encoder {
+public class Encoder {
 
     public static String encodeString(String inputString) {
         String withSalt = "1dilan3" + inputString + "ims";
@@ -21,9 +21,4 @@ public class encoder {
         return d.substring(0, d.length() - 3);
     }
 
-    public static void main(String[] args) {
-        encoder encoder = new encoder();
-        System.out.println(encoder.encodeString("123"));
-        System.out.println(encoder.decodeString("MWRpbGFuMzEyM2RzZmRzZmRmZGZzZGZpbXM="));
-    }
 }

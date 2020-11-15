@@ -1,4 +1,4 @@
-package com.dilan.ims.service.services.Impl;
+package com.dilan.ims.service.services.impl;
 
 import com.dilan.ims.service.domain.User;
 import com.dilan.ims.service.repositories.UserPermissionRepository;
