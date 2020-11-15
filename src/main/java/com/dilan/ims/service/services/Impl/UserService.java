@@ -29,10 +29,6 @@ public class UserService implements IUserService {
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
         userRepository.findAll().forEach(users::add);
-
-//        List<UserPermission> userPermissions = new ArrayList<>();
-//        userPermissionRepository.findAll().forEach(userPermissions::add);
-//        return userPermissions;
         return users;
     }
 
