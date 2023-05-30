@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk8:alpine
+FROM debian:latest
 
 USER 10014
 
