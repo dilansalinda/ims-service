@@ -1,4 +1,4 @@
-FROM java:8-jdk-alpine
+FROM adoptopenjdk/openjdk8:alpine
 
 USER 10014
 
